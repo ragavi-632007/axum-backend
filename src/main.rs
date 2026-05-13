@@ -23,12 +23,9 @@ mod web;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-	// Initialize ModelController.
 	let mc = ModelController::new().await?;
-
 	let routes_apis = web::routes_tickets::routes(mc.clone())
 		.route_layer(middleware::from_fn(web::mw_auth::mw_require_auth));
-
 	let routes_all = Router::new()
 		.merge(routes_hello())
 		.merge(web::routes_login::routes())
@@ -41,8 +38,7 @@ async fn main() -> Result<()> {
 		.layer(CookieManagerLayer::new())
 		.fallback_service(route_static());
 
-	// region:    --- Start Server
-	// run our app with hyper, listening localhost on port 8080
+	
 	let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
 		.await
 		.map_err(|err| format!("Cannot start TcpListener. \nCause: {err}"))?;

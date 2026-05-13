@@ -1,5 +1,3 @@
-//! Simplistic Model Layer
-//! (with mock-store layer)
 
 use crate::ctx::Ctx;
 use crate::{Error, Result};
@@ -18,9 +16,7 @@ pub struct Ticket {
 pub struct TicketForCreate {
 	pub title: String,
 }
-// endregion: --- Ticket Types
 
-// region:    --- Model Controller
 #[derive(Clone)]
 pub struct ModelController {
 	tickets_store: Arc<Mutex<Vec<Option<Ticket>>>>,
